@@ -12,6 +12,7 @@ export default class CreateExercises extends Component {
     this.onChangeDuration = this.onChangeDuration.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit2 = this.onSubmit2.bind(this);
     
     this.state = {
       username: '',
@@ -70,11 +71,23 @@ export default class CreateExercises extends Component {
       date: this.state.date
     }
  
-    console.log(exercise);  
     
     axios.post('http://localhost:5000/exercises/add', exercise)
       .then(res => console.log(res.data));
       
+    window.location = '/';
+  }
+  
+    
+  onSubmit2() {
+    let name = this.state.username;
+    let id = this.state.username._id;
+    
+    axios.delete(`http://localhost:5000/users/${id}`, {data:{data: name}})
+      .then(res => console.log('del_response:',res.data));
+    this.setState({
+      users: this.state.users.filter(el => el.username !== name)
+    })
     window.location = '/';
   }
   
@@ -108,7 +121,14 @@ export default class CreateExercises extends Component {
         </div>
         
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Create Exercise Log" className="btn btn-primary" /><br/>
+          
+        </div>
+      </form>
+      <form onSubmit={this.onSubmit2}>
+      <div className="form-group">
+          
+          <input type="submit" value="Delete User" className="btn btn-primary" />
         </div>
       </form>
       </div>

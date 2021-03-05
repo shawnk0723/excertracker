@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+let Exercise = require('../models/exercise.model');
 
 router.route('/').get((req, res) => {
   User.find()
@@ -17,5 +18,16 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+router.route('/:id').delete((req, res) => {
+  User.deleteMany({username: req.body.data})
+    .then(() => {
+      // res.json('User Deleted')
+     
+      Exercise.deleteMany({username: req.body.data})
+        .then(() => res.json('Exercise Deleted'))
+        .catch(err => res.status(400).json('Error: ' + err))
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+ 
 module.exports = router;
-

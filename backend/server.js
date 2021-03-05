@@ -22,9 +22,11 @@ connection.once("open", () => {
 
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
+const rankRouter = require('./routes/rank');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
+app.use('/rank', rankRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
